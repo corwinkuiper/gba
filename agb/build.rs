@@ -2,7 +2,7 @@ use agb_image_converter::{convert_image, Colour, ImageConverterConfig, TileSize}
 
 fn main() {
     println!("cargo:rerun-if-changed=crt0.s");
-    println!("cargo:rerun-if-changed=interrupt_simple.s");
+    println!("cargo:rerun-if-changed=interrupt_handler.s");
     println!("cargo:rerun-if-changed=gfx/test_logo.png");
 
     let out_file_name = "crt0.o";

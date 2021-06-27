@@ -8,7 +8,7 @@ __start:
 
 .Initialise:
     @ Set interrupt handler
-    ldr r0, =InterruptHandlerSimple
+    ldr r0, =InterruptHandler
     ldr r1, =0x03007FFC
     str r0, [r1]
 
@@ -41,4 +41,4 @@ __start:
     bx  r2
 .pool
 
-.include "interrupt_simple.s"
+.include "interrupt_handler.s"
