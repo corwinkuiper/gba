@@ -1,7 +1,6 @@
 use crate::memory_mapped::MemoryMapped;
 use bitflags::bitflags;
 
-use vblank::VBlankGiver;
 use video::Video;
 
 use self::object::ObjectControl;
@@ -18,13 +17,11 @@ pub mod object;
 pub mod palette16;
 /// Graphics mode 0. Four regular backgrounds.
 pub mod tiled0;
-/// Syscall for waiting for vblank.
-pub mod vblank;
 /// Giving out graphics mode.
 pub mod video;
 
 const DISPLAY_CONTROL: MemoryMapped<u16> = unsafe { MemoryMapped::new(0x0400_0000) };
-const DISPLAY_STATUS: MemoryMapped<u16> = unsafe { MemoryMapped::new(0x0400_0004) };
+pub(crate) const DISPLAY_STATUS: MemoryMapped<u16> = unsafe { MemoryMapped::new(0x0400_0004) };
 const VCOUNT: MemoryMapped<u16> = unsafe { MemoryMapped::new(0x0400_0006) };
 
 bitflags! {
@@ -63,7 +60,6 @@ enum DisplayMode {
 /// Manages distribution of display modes, obtained from the gba struct
 pub struct Display {
     pub video: Video,
-    pub vblank: VBlankGiver,
     pub object: ObjectDistribution,
 }
 
@@ -80,7 +76,6 @@ impl Display {
     pub(crate) const unsafe fn new() -> Self {
         Display {
             video: Video {},
-            vblank: VBlankGiver {},
             object: ObjectDistribution {},
         }
     }

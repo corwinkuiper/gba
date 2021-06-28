@@ -7,11 +7,11 @@ pub fn main() -> ! {
     let mut gba = agb::Gba::new();
     let mut mgba = agb::mgba::Mgba::new().unwrap();
 
-    let vblank = gba.display.vblank.get();
+    let vblank = agb::interrupt::VBlank::new();
 
     let mut count = 0;
     loop {
-        vblank.wait_for_VBlank();
+        vblank.wait_for_vblank();
 
         mgba.print(
             format_args!("Hello, world, frame = {}", count),
