@@ -4,7 +4,6 @@
 extern crate agb;
 #[no_mangle]
 pub fn main() -> ! {
-    let mut gba = agb::Gba::new();
     let mut mgba = agb::mgba::Mgba::new().unwrap();
 
     let vblank = agb::interrupt::VBlank::new();
