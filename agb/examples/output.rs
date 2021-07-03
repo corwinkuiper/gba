@@ -6,7 +6,7 @@ extern crate agb;
 pub fn main() -> ! {
     let mut mgba = agb::mgba::Mgba::new().unwrap();
 
-    let vblank = agb::interrupt::VBlank::new();
+    let vblank = agb::interrupt::VBlank::get();
 
     let mut count = 0;
     loop {
