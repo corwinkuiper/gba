@@ -3,10 +3,10 @@
 
 extern crate agb;
 
+use agb::input::{Button, ButtonController, Tri};
+use agb::number::Num;
 use agb::sound::mixer::SoundChannel;
 use agb::Gba;
-use agb::input::{ButtonController, Tri, Button};
-use agb::number::Num;
 
 // Music - "I will not let you let me down" by Josh Woodward, free download at http://joshwoodward.com
 const I_WILL_NOT_LET_YOU_LET_ME_DOWN: &[u8] = include_bytes!("i-will-not-let-you-let-me-down.raw");
@@ -15,7 +15,7 @@ const I_WILL_NOT_LET_YOU_LET_ME_DOWN: &[u8] = include_bytes!("i-will-not-let-you
 pub fn main() -> ! {
     let mut gba = Gba::new();
     let mut input = ButtonController::new();
-    let vblank_provider = gba.display.vblank.get();
+    let vblank_provider = agb::interrupt::VBlank::get();
 
     let mut mixer = gba.mixer.mixer();
     mixer.enable();
@@ -35,7 +35,7 @@ pub fn main() -> ! {
                     Tri::Zero => channel.panning(0.into()),
                     Tri::Positive => channel.panning(half),
                 };
-    
+
                 match input.y_tri() {
                     Tri::Negative => channel.playback(half_usize.change_base() + 1),
                     Tri::Zero => channel.playback(1.into()),
@@ -50,7 +50,7 @@ pub fn main() -> ! {
             }
         }
 
-        vblank_provider.wait_for_VBlank();
+        vblank_provider.wait_for_vblank();
         mixer.vblank();
     }
 }
